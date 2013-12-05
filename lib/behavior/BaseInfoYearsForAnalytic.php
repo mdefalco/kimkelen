@@ -47,10 +47,16 @@
 
       $student_career_school_year = StudentCareerSchoolYearPeer::retrieveCareerSchoolYearForStudentAndYear($student, $school_year);
  
-      return $student_career_school_year[0]->getAnualAverage();
+      return  $student_career_school_year[0]->getAnualAverage()
+       ?  $student_career_school_year[0]->getAnualAverage()
+       : $this->getNullAverage();
 
    }
 
+
+   public function getNullAverage(){
+      return "--";
+   }
 
    public function getSubjectsFromSchoolYear($sy)
    {
