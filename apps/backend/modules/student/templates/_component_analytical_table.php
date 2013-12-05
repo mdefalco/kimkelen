@@ -19,22 +19,20 @@
  */ ?>
 <?php use_helper('Date') ?>
 
-  <?php if(0 == count($objects)):?>
+  <?php if(0 == count($iyfa->getSubjectsForAllSchoolYears())):?>
     
     <div class="notice" style="padding: 20px; background-image: none; margin-bottom: 15px;">
       <?php echo __('The student has no approved subjects')?>
     </div>
   
   <?php else: ?>
-      <?php $year= 0; ?>
 
-
-      <?php foreach ($objects as $key => $subjects): ?>
+      <?php foreach ($iyfa->getSubjectsForAllSchoolYears() as $key => $subjectsForYear): ?>
         
         <table class="table gridtable_bordered">
           <thead>
             <tr>
-                <th colspan="7"><?php echo __('Year '.$key) ?></th>
+                <th colspan="7"><?php echo __('Year '. $iyfa->getYearFromSchoolYear($key, $student)) ?></th>
             </tr>
             <tr>
               <th rowspan="2"><?php echo __("Condition") ?></th>
@@ -51,9 +49,9 @@
           </thead> 
 
           <tbody>
-            <?php $school_year = null ?>
 
-            <?php foreach ($subjects as $css): ?>
+            <?php foreach ($subjectsForYear[0] as $css): ?>
+          
                   <tr>
 
                     <td class="text-center"><?php echo $css->getCondition() ?></td>
@@ -74,14 +72,13 @@
             <?php endforeach ?>
               
             <tr >
-              <th colspan="5" style="text-align:left !important;"><?php echo __('Course') ?></th>
-              <th colspan="2"><?php echo __('Average ') ?>: <?php echo "HACER" ?>    </th>
+              <th colspan="4" style="text-align:left !important;"><?php echo __('Course') ?></th>
+              <th colspan="2"><?php echo __('Average ') ?>: <?php echo $iyfa->getAverageForSchoolYear($key, $student)?> </th>
               <th colspan="2"></th>
             </tr>
           
           </tbody>
       </table>
-      <?php $year++ ?>
     <?php endforeach ?>
 
 <?php endif; ?>

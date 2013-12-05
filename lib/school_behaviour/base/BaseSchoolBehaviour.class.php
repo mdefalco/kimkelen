@@ -1052,6 +1052,32 @@ class BaseSchoolBehaviour extends InterfaceSchoolBehaviour
 
   }
 
+  public function getInfoYearsForAnalytic($student)
+  { 
+    $ret = array();
+
+    //Student Career School Years (años que corso el alumno en la escuela)
+    $scsys= $student->getStudentCareerSchoolYears();
+
+    return $this->getInstanceInfoYearsForAnalytic($student->getStudentCareerSchoolYearsForAnalytic());
+
+   
+  }
+
+  protected function getInstanceInfoYearsForAnalytic($student_career_school_years){
+
+    $klass = $this->getClassInfoYearsForAnalytic();
+
+    return new $klass($student_career_school_years);
+
+  }
+
+  protected function getClassInfoYearsForAnalytic(){
+
+    return 'BaseInfoYearsForAnalytic';
+
+  }
+
   public function getCourseSubjectStudentsForAnalytics($student, $school_year)
   {
     

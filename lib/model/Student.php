@@ -1304,6 +1304,28 @@ class Student extends BaseStudent
     return $repproveds_to_show;
   }
 
+
+public function getStudentCareerSchoolYearsForAnalytic()
+  {
+   
+      $criteria = new Criteria();
+
+      $criteria->add(StudentCareerSchoolYearPeer::STUDENT_ID, $this->getId());
+      $criteria->add(StudentCareerSchoolYearPeer::STATUS,  StudentCareerSchoolYearStatus::APPROVED);
+
+      $criteria->addAscendingOrderByColumn(StudentCareerSchoolYearPeer::YEAR);
+
+      $array_for_years = array();
+
+      foreach(StudentCareerSchoolYearPeer::doSelect($criteria) as $scsy){
+          $array_for_years[$scsy->getCareerSchoolYear()->getSchoolYear()->getId()] = $scsy;
+      }
+
+      return  $array_for_years;
+
+  }
+
+
 }
 
 sfPropelBehavior::add('Student', array('person_delete'));
